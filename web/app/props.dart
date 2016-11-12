@@ -7,7 +7,7 @@ class Position implements Prop {
 
 class Velocity implements Prop {
   num x, y, gravity;
-  Velocity([this.x = 0, this.y = 0], {this.gravity: 0});
+  Velocity({this.x: 0, this.y: 0, this.gravity: 0});
 }
 
 class Size implements Prop {
