@@ -1,0 +1,1 @@
+num lerp(num a, num b, num delta) => a + (b - a) * delta.clamp(0, 1);
