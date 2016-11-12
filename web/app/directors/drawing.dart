@@ -11,15 +11,13 @@ class DrawingDirector implements Director {
     clear();
 
     for (final actor in actors) {
-      if (actor.has([Position, Size, Color])) {
-        Position pos = actor.get(Position);
-        Size size = actor.get(Size);
-        Color color = actor.get(Color);
+      Position pos = actor.get(Position);
+      Size size = actor.get(Size);
+      Color color = actor.get(Color);
 
-        canvas.context2D
-          ..fillStyle = color.color
-          ..fillRect(pos.x, pos.y, size.width, size.height);
-      }
+      canvas.context2D
+        ..fillStyle = color.color
+        ..fillRect(pos.x, pos.y, size.width, size.height);
     }
   }
 }
