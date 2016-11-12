@@ -3,7 +3,7 @@ import 'dart:html';
 class Keyboard {
   static Map<int, bool> pressedKeys = {};
 
-  static init() {
+  static void init() {
     window.onKeyDown.listen((event) => pressedKeys[event.keyCode] = true);
     window.onKeyUp.listen((event) => pressedKeys[event.keyCode] = false);
   }
