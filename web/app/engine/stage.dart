@@ -11,7 +11,7 @@ class Stage {
 
   void step() {
     for (final director in directors) {
-      director.direct(actors.where(director.isValid));
+      director.direct(actors);
     }
   }
 }
