@@ -8,6 +8,8 @@ class DrawingDirector implements Director {
   bool isValid(Actor actor) => actor.has([Position, Size, Color]);
 
   void direct(List<Actor> actors) {
+    clear();
+
     for (final actor in actors) {
       if (actor.has([Position, Size, Color])) {
         Position pos = actor.get(Position);

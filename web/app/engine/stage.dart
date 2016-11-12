@@ -7,6 +7,8 @@ class Stage {
 
   Stage(this.directors);
 
+  add(Actor actor) => actors.add(actor);
+
   void step() {
     for (final director in directors) {
       director.direct(actors.where(director.isValid));

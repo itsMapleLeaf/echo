@@ -1,6 +1,6 @@
-import 'engine/actor.dart';
+import '../engine/actor.dart';
 
-import 'props.dart';
+import '../props.dart';
 
 class Player extends Actor {
   Player() : super([
