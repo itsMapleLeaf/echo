@@ -6,17 +6,7 @@ import 'keyboard.dart';
 import 'player.dart';
 import 'props.dart';
 import 'util.dart';
-
-class Clock {
-  num time = new DateTime.now().millisecondsSinceEpoch;
-
-  num step() {
-    num now = new DateTime.now().millisecondsSinceEpoch;
-    num elapsed = (now - time) / 1000;
-    time = now;
-    return elapsed;
-  }
-}
+import 'clock.dart';
 
 class InputDirector {
   final clock = new Clock();
