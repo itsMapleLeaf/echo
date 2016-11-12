@@ -1,4 +1,4 @@
-abstract class Prop {}
+import 'engine/prop.dart';
 
 class Position implements Prop {
   num x, y;

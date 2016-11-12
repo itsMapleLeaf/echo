@@ -1,4 +1,4 @@
-import '../actor.dart';
+import 'actor.dart';
 
 abstract class Director {
   bool isValid(Actor actor);

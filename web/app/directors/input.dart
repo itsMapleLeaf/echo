@@ -1,12 +1,14 @@
 import 'dart:html';
 
-import '../actor.dart';
-import '../clock.dart';
+import '../engine/actor.dart';
+import '../engine/director.dart';
+
 import '../props.dart';
+import '../clock.dart';
 import '../keyboard.dart';
 import '../util.dart';
 
-class InputDirector {
+class InputDirector implements Director {
   final clock = new Clock();
 
   bool isValid(Actor actor) => actor.has([Velocity, PlayerInput]);

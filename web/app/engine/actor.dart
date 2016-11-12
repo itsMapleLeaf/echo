@@ -1,4 +1,4 @@
-import 'props.dart';
+import 'prop.dart';
 
 class Actor {
   Map<Type, Prop> props = {};

@@ -1,8 +1,10 @@
-import '../actor.dart';
+import '../engine/actor.dart';
+import '../engine/director.dart';
+
 import '../clock.dart';
 import '../props.dart';
 
-class PhysicsDirector {
+class PhysicsDirector implements Director {
   final clock = new Clock();
 
   bool isValid(Actor actor) => actor.has([Position, Velocity]);

@@ -1,4 +1,5 @@
-import 'actor.dart';
+import 'engine/actor.dart';
+
 import 'props.dart';
 
 class Player extends Actor {
