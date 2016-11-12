@@ -7,7 +7,7 @@ class Player extends Actor {
     new Position(100, 100),
     new Size(50, 50),
     new Color('#333'),
-    new Velocity(),
+    new Velocity(gravity: 800),
     new PlayerInput(),
   ]);
 }
