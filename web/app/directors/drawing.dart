@@ -9,10 +9,10 @@ class DrawingDirector implements Director {
     clear();
 
     for (final actor in actors) {
-      if (actor.has([Position, Size, Color])) {
+      if (actor.has([Position, Size, Appearance])) {
         final pos = actor[Position];
         final size = actor[Size];
-        final color = actor[Color];
+        final color = actor[Appearance];
 
         canvas.context2D
           ..fillStyle = color.color

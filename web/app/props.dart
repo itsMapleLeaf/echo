@@ -15,9 +15,9 @@ class Size implements Prop {
   Size(this.width, this.height);
 }
 
-class Color implements Prop {
+class Appearance implements Prop {
   String color;
-  Color(this.color);
+  Appearance(this.color);
 }
 
 class PlayerInput implements Prop {}

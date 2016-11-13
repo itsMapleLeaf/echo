@@ -6,7 +6,7 @@ class Player extends Actor {
   Player() : super([
     new Position(100, 100),
     new Size(50, 50),
-    new Color('#333'),
+    new Appearance('#333'),
     new Velocity(gravity: 800),
     new PlayerInput(),
   ]);
