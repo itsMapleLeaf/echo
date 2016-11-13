@@ -1,4 +1,5 @@
 import 'engine/prop.dart';
+import 'color.dart';
 
 class Position implements Prop {
   num x, y;
@@ -16,7 +17,7 @@ class Size implements Prop {
 }
 
 class Appearance implements Prop {
-  String color;
+  Color color;
   Appearance(this.color);
 }
 
