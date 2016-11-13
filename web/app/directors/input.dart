@@ -21,7 +21,7 @@ class InputDirector implements Director {
           : Keyboard.isDown(KeyCode.RIGHT) ? 400
           : 0;
 
-        Velocity vel = actor.get(Velocity);
+        final vel = actor[Velocity];
         vel.x = lerp(vel.x, targetVel, dt * 12);
       }
     }

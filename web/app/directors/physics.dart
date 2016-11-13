@@ -12,8 +12,8 @@ class PhysicsDirector implements Director {
 
     for (final actor in actors) {
       if (actor.has([Position, Velocity])) {
-        Position pos = actor.get(Position);
-        Velocity vel = actor.get(Velocity);
+        final pos = actor[Position];
+        final vel = actor[Velocity];
 
         vel.y += vel.gravity * dt;
 

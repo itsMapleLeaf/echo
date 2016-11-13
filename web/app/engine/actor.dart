@@ -9,12 +9,17 @@ class Actor {
     }
   }
 
-  add(Prop prop) => props[prop.runtimeType] = prop;
+  void add(Prop prop) {
+    props[prop.runtimeType] = prop;
+  }
 
-  remove(Prop prop) => props.remove(prop.runtimeType);
+  void remove(Prop prop) {
+    props.remove(prop.runtimeType);
+  }
 
   bool has(List<Type> propTypes) =>
     propTypes.every((type) => props.containsKey(type));
 
-  Prop get(Type propType) => props[propType];
+  operator [](Type propType) =>
+    props[propType];
 }
