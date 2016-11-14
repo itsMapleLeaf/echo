@@ -1,4 +1,7 @@
 import 'color.dart';
+import 'component_echo.dart';
+import 'component_physics.dart';
+import 'component_graphics.dart';
 import 'game_object.dart';
 import 'game_world.dart';
 

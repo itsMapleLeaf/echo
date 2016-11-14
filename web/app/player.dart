@@ -1,4 +1,8 @@
 import 'color.dart';
+import 'component_echo.dart';
+import 'component_graphics.dart';
+import 'component_physics.dart';
+import 'component_input.dart';
 import 'game_object.dart';
 
 class Player extends GameObject {
