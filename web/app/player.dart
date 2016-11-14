@@ -6,7 +6,7 @@ class Player extends GameObject {
     add(new BoundingBox(200, 200, 50, 50));
     add(new Velocity());
     add(new PlayerInput());
-    add(new CollisionResolution());
+    add(new Physics());
     add(new DrawableRect(Color.gray));
   }
 }

@@ -89,7 +89,7 @@ class PlayerInput extends Component {
   }
 }
 
-class CollisionResolution extends Component {
+class Physics extends Component {
   static Point getCenter(Rectangle rect) {
     return (rect.topLeft + rect.bottomRight) * 0.5;
   }
