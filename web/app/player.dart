@@ -7,6 +7,7 @@ class Player extends GameObject {
     add(new Velocity());
     add(new PlayerInput());
     add(new Physics());
+    add(new EchoSource());
     add(new DrawableRect(Color.gray));
   }
 }

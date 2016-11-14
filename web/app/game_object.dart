@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:html';
 import 'dart:math';
 
 import 'color.dart';
@@ -35,6 +37,8 @@ class BoundingBox extends Component {
   BoundingBox(this.x, this.y, this.width, this.height);
 
   Rectangle get rect => new Rectangle(x, y, width, height);
+
+  Point get center => new Point(x + width / 2, y + height / 2);
 
   void setPosition(num _x, num _y) {
     x = _x;
@@ -137,6 +141,9 @@ class Physics extends Component {
     return new Point(dx, dy);
   }
 
+  bool onGround = false;
+  bool hitGround = false;
+
   void update(self, dt, GameWorld world) {
     final box = self[BoundingBox] as BoundingBox;
     final vel = self[Velocity];
@@ -146,7 +153,7 @@ class Physics extends Component {
       .map((obj) => (obj[BoundingBox] as BoundingBox).rect);
 
     final selfRect = box.rect;
-    final selfCenter = getCenter(selfRect);
+    final selfCenter = box.center;
 
     final closestToFurthest = sortByDistance(worldRects, selfCenter);
     final disp = getDisplacement(selfRect, closestToFurthest);
@@ -156,16 +163,59 @@ class Physics extends Component {
 
     if (disp.x != 0 && vel.vx.sign != disp.x.sign) vel.vx = 0;
     if (disp.y != 0 && vel.vy.sign != disp.y.sign) vel.vy = 0;
+
+    final _onGround = disp.y < 0;
+    hitGround = _onGround && !onGround;
+    onGround = _onGround;
+  }
+}
+
+class EchoSource extends Component {
+  void update(self, dt, GameWorld world) {
+    final box = self[BoundingBox] as BoundingBox;
+    final physics = self[Physics] as Physics;
+    if (physics.hitGround) {
+      trigger(box.center, world);
+    }
+  }
+
+  void trigger(Point center, GameWorld world) {
+    for (final other in world.objects) {
+      if (other.has(BoundingBox) && other.has(EchoRespondent)) {
+        final otherCenter = (other[BoundingBox] as BoundingBox).center;
+        final delay = center.distanceTo(otherCenter);
+        final respondent = other[EchoRespondent] as EchoRespondent;
+
+        new Future.delayed(new Duration(milliseconds: delay.round()), () {
+          respondent.show();
+        });
+      }
+    }
+  }
+}
+
+class EchoRespondent extends Component {
+  num visibility = 0;
+
+  void update(self, dt, world) {
+    visibility = lerp(visibility, 0, 7 * dt);
+    final rect = self[DrawableRect] as DrawableRect;
+    rect.opacity = visibility;
+  }
+
+  void show() {
+    visibility = 1;
   }
 }
 
 class DrawableRect extends Component {
   Color color;
+  num opacity = 1;
 
   DrawableRect(this.color);
 
   void draw(self) {
     final box = self[BoundingBox];
-    drawRectangle(box.x, box.y, box.width, box.height, color);
+    drawRectangle(box.x, box.y, box.width, box.height, color.withOpacity(opacity));
   }
 }

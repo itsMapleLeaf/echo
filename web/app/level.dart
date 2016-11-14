@@ -21,6 +21,7 @@ class MapBlock extends GameObject {
 
   MapBlock(int x, int y) {
     add(new BoundingBox(x * size, y * size, size, size));
+    add(new EchoRespondent());
     add(new DrawableRect(Color.asphalt));
   }
 }
