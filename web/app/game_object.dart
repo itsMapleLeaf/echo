@@ -137,7 +137,7 @@ class CollisionResolution extends Component {
     return new Point(dx, dy);
   }
 
-  void update(self, dt, world) {
+  void update(self, dt, GameWorld world) {
     final box = self[BoundingBox] as BoundingBox;
     final vel = self[Velocity];
 
@@ -145,7 +145,7 @@ class CollisionResolution extends Component {
       .where((obj) => obj != self && obj.has(BoundingBox))
       .map((obj) => (obj[BoundingBox] as BoundingBox).rect);
 
-    final selfRect = new Rectangle(box.x, box.y, box.width, box.height);
+    final selfRect = box.rect;
     final selfCenter = getCenter(selfRect);
 
     final closestToFurthest = sortByDistance(worldRects, selfCenter);
