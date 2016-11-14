@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'color.dart';
 
-final CanvasElement canvas = querySelector('#game');
+final CanvasElement canvas = querySelector('canvas');
 
 /// Utility class for working with fonts
 /// For use with HTML5 canvas

@@ -1,14 +1,16 @@
 import 'dart:html';
 
-import 'keyboard.dart';
+import 'clock.dart';
 import 'game.dart';
 
 main() async {
-  Keyboard.init();
-
   final game = new Game();
+  final clock = new Clock();
+
   while (true) {
     await window.animationFrame;
-    game.step();
+    final dt = clock.step();
+    game.update(dt);
+    game.draw();
   }
 }

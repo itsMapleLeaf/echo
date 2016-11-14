@@ -21,4 +21,9 @@ class Appearance implements Prop {
   Appearance(this.color);
 }
 
+class Collision implements Prop {
+  bool solid;
+  bool resolves;
+}
+
 class PlayerInput implements Prop {}
