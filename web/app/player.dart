@@ -1,24 +1,14 @@
+import 'color.dart';
 import 'game_object.dart';
-import 'game_world.dart';
-import 'graphics.dart';
+// import 'game_world.dart';
+// import 'graphics.dart';
 
-class Player extends GameObject
-with BoundingBox, PlayerInput, Collideable, Jumping, Velocity, DrawableRect {
+class Player extends GameObject {
   Player() {
-    setSize(50, 50);
-  }
-
-  void respawn() {
-    setCenterPosition(canvas.width / 2, canvas.height / 2);
-  }
-
-  void update(num dt, GameWorld world) {
-    updateInput(dt);
-    updateVelocity(dt);
-    resolveCollisions(world);
-  }
-
-  void draw() {
-    drawRect();
+    add(new BoundingBox(200, 200, 50, 50));
+    add(new Velocity());
+    add(new PlayerInput());
+    add(new CollisionResolution());
+    add(new DrawableRect(Color.gray));
   }
 }

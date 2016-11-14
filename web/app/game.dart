@@ -22,7 +22,7 @@ class Game {
     ]);
 
     world.add(player);
-    player.respawn();
+    // player.respawn();
   }
 
   update(num dt) {

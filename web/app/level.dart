@@ -1,3 +1,4 @@
+import 'color.dart';
 import 'game_object.dart';
 import 'game_world.dart';
 
@@ -15,15 +16,11 @@ class Level {
   }
 }
 
-class MapBlock extends GameObject with BoundingBox, DrawableRect {
+class MapBlock extends GameObject {
   static const size = 80;
 
   MapBlock(int x, int y) {
-    setPosition(x * size, y * size);
-    setSize(size, size);
-  }
-
-  draw() {
-    drawRect();
+    add(new BoundingBox(x * size, y * size, size, size));
+    add(new DrawableRect(Color.asphalt));
   }
 }
