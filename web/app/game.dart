@@ -26,8 +26,8 @@ class GameWorld {
 }
 
 abstract class GameObject {
-  void update(num dt, GameWorld world);
-  void draw();
+  void update(num dt, GameWorld world) {}
+  void draw() {}
 }
 
 abstract class BoundingBox {
@@ -187,50 +187,50 @@ with BoundingBox, PlayerInput, Collideable, Jumping, Velocity, DrawableRect {
   }
 }
 
+class MapBlock extends GameObject with BoundingBox, DrawableRect {
+  static const size = 80;
+
+  MapBlock(int x, int y) {
+    setPosition(x * size, y * size);
+    setSize(size, size);
+  }
+
+  draw() {
+    drawRect();
+  }
+}
+
 class Map {
-  static const blockSize = 80;
-
-  List<Rectangle> blocks = [];
-
-  Map(List<String> mapData) {
+  Map(GameWorld world, List<String> mapData) {
     for (int i = 0; i < mapData.length; i++) {
       final row = mapData[i];
       for (int j = 0; j < row.length; j++) {
         final char = row[j];
         if (char == '1') {
-          final left = j * blockSize;
-          final top = i * blockSize;
-          blocks.add(new Rectangle(left, top, blockSize, blockSize));
+          world.add(new MapBlock(j, i));
         }
       }
-    }
-  }
-
-  void draw() {
-    for (final block in blocks) {
-      drawRectangle(block.left, block.top, block.width, block.height, Color.asphalt);
     }
   }
 }
 
 class Game {
   final world = new GameWorld();
-
   final player = new Player();
 
-  final map = new Map([
-    '                ',
-    '                ',
-    '                ',
-    '                ',
-    '                ',
-    '                ',
-    '      1         ',
-    '      1         ',
-    '1111111111111111',
-  ]);
-
   Game() {
+    new Map(world, [
+      '                ',
+      '                ',
+      '                ',
+      '                ',
+      '                ',
+      '                ',
+      '      1         ',
+      '      1         ',
+      '1111111111111111',
+    ]);
+
     world.add(player);
     player.respawn();
   }
