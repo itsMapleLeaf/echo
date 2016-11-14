@@ -5,7 +5,30 @@ import 'graphics.dart';
 import 'keyboard.dart';
 import 'util.dart';
 
-abstract class GameObject {}
+class GameWorld {
+  List<GameObject> objects = [];
+
+  void add(GameObject obj) {
+    objects.add(obj);
+  }
+
+  void remove(GameObject obj) {
+    objects.remove(obj);
+  }
+
+  void update(num dt) {
+    for (final obj in objects) obj.update(dt, this);
+  }
+
+  void draw() {
+    for (final obj in objects) obj.draw();
+  }
+}
+
+abstract class GameObject {
+  void update(num dt, GameWorld world);
+  void draw();
+}
 
 abstract class BoundingBox {
   num x = 0, y = 0, width = 0, height = 0;
@@ -33,7 +56,8 @@ abstract class Velocity implements BoundingBox {
   num vy = 0;
   num gravity = 2500;
 
-  void updatePosition(num dt) {
+  void updateVelocity(num dt) {
+    vy += gravity * dt;
     x += vx * dt;
     y += vy * dt;
   }
@@ -47,13 +71,13 @@ abstract class Jumping implements Velocity {
   }
 }
 
-abstract class PlayerInput implements Jumping {
+abstract class PlayerInput implements Velocity, Jumping {
   final kb = new Keyboard();
 
   num walking = 0;
   num walkSpeed = 500;
 
-  void respondToInput() {
+  void updateInput(num dt) {
     num target = 0;
     if (kb.isDown(KeyCode.LEFT)) target -= 1;
     if (kb.isDown(KeyCode.RIGHT)) target += 1;
@@ -62,11 +86,8 @@ abstract class PlayerInput implements Jumping {
     if (kb.wasPressed(KeyCode.UP)) {
       jump();
     }
-  }
 
-  void updateVelocity(num dt) {
     vx = lerp(vx, walking * walkSpeed, dt * 16);
-    vy += gravity * dt;
   }
 }
 
@@ -136,7 +157,7 @@ abstract class Collideable implements BoundingBox, Velocity {
 abstract class DrawableRect implements BoundingBox {
   Color color = new Color(0.3, 0.3, 0.3);
 
-  void draw() {
+  void drawRect() {
     drawRectangle(x, y, width, height, color);
   }
 }
@@ -145,16 +166,26 @@ class Player extends GameObject
 with BoundingBox, PlayerInput, Collideable, Jumping, Velocity, DrawableRect {
   Player() {
     setSize(50, 50);
+  }
+
+  void respawn() {
     setCenterPosition(canvas.width / 2, canvas.height / 2);
   }
 
-  void update(num dt) {
-    respondToInput();
+  void update(num dt, GameWorld world) {
+    final rects = world.objects
+      .where((obj) => obj != this && obj is BoundingBox)
+      .map((obj) => (obj as BoundingBox).rect);
+
+    updateInput(dt);
     updateVelocity(dt);
-    updatePosition(dt);
+    resolveCollisions(rects);
+  }
+
+  void draw() {
+    drawRect();
   }
 }
-
 
 class Map {
   static const blockSize = 80;
@@ -183,6 +214,8 @@ class Map {
 }
 
 class Game {
+  final world = new GameWorld();
+
   final player = new Player();
 
   final map = new Map([
@@ -191,22 +224,23 @@ class Game {
     '                ',
     '                ',
     '                ',
-    '      1         ',
+    '                ',
     '      1         ',
     '      1         ',
     '1111111111111111',
   ]);
 
+  Game() {
+    world.add(player);
+    player.respawn();
+  }
+
   update(num dt) {
-    player.update(dt);
-    if (player is Collideable) {
-      player.resolveCollisions(map.blocks);
-    }
+    world.update(dt);
   }
 
   draw() {
     clear(Color.white);
-    player.draw();
-    map.draw();
+    world.draw();
   }
 }
