@@ -1,7 +1,5 @@
 import 'color.dart';
 import 'game_object.dart';
-// import 'game_world.dart';
-// import 'graphics.dart';
 
 class Player extends GameObject {
   Player() {

@@ -9,11 +9,9 @@ import 'util.dart';
 abstract class GameObject {
   final components = <Type, Component>{};
 
-  void add(Component c) {
-    components[c.runtimeType] = c;
-  }
-
+  void add(Component c) { components[c.runtimeType] = c; }
   bool has(Type ctype) => components.containsKey(ctype);
+  dynamic fetch(Type ctype) => components[ctype];
 
   void update(num dt, GameWorld world) {
     for (final c in components.values) c.update(this, dt, world);
@@ -23,7 +21,7 @@ abstract class GameObject {
     for (final c in components.values) c.draw(this);
   }
 
-  dynamic operator [](Type ctype) => components[ctype];
+  dynamic operator [](Type ctype) => fetch(ctype);
 }
 
 abstract class Component {
