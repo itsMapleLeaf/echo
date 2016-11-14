@@ -120,11 +120,15 @@ abstract class Collideable implements BoundingBox, Velocity {
     return new Point(dx, dy);
   }
 
-  void resolveCollisions(List<Rectangle> rects) {
+  void resolveCollisions(GameWorld world) {
+    final worldRects = world.objects
+      .where((obj) => obj != this && obj is BoundingBox)
+      .map((obj) => (obj as BoundingBox).rect);
+
     final selfRect = new Rectangle(x, y, width, height);
     final selfCenter = getCenter(selfRect);
 
-    final closestToFurthest = sortByDistance(rects, selfCenter);
+    final closestToFurthest = sortByDistance(worldRects, selfCenter);
     final disp = getDisplacement(selfRect, closestToFurthest);
 
     x += disp.x;

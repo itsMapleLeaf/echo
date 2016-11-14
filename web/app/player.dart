@@ -13,13 +13,9 @@ with BoundingBox, PlayerInput, Collideable, Jumping, Velocity, DrawableRect {
   }
 
   void update(num dt, GameWorld world) {
-    final rects = world.objects
-      .where((obj) => obj != this && obj is BoundingBox)
-      .map((obj) => (obj as BoundingBox).rect);
-
     updateInput(dt);
     updateVelocity(dt);
-    resolveCollisions(rects);
+    resolveCollisions(world);
   }
 
   void draw() {
