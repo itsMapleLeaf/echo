@@ -10,6 +10,9 @@ main() async {
   while (true) {
     await window.animationFrame;
     final dt = clock.step();
+
+    if (dt > 0.5) continue;
+
     game.update(dt);
     game.draw();
   }
